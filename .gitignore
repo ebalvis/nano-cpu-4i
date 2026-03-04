@@ -1,21 +1,10 @@
-# Dependencias Node (solo para build local)
-node_modules/
-
 # macOS
 .DS_Store
-.AppleDouble
-.LSOverride
-Icon?
 ._*
 
 # Windows
 Thumbs.db
-ehthumbs.db
 Desktop.ini
-$RECYCLE.BIN/
-
-# Linux
-*~
 
 # Editores
 .vscode/settings.json
@@ -25,8 +14,3 @@ $RECYCLE.BIN/
 
 # Logs
 *.log
-npm-debug.log*
-
-# Temporal
-.cache/
-.temp/

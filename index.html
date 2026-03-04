@@ -4,33 +4,13 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Máquina Simple — Simulador Interactivo</title>
-  <meta name="description" content="Simulador didáctico de la Máquina Simple para la docencia de Arquitectura de Computadores. ISA de 4 instrucciones, breakpoints, edición en tiempo real."/>
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
-
-  <!-- React 18 producción — sin Babel, sin advertencias -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"
-          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"
-          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body, #root { height: 100%; overflow: hidden; }
-    body { background: #0a0c10; }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #0d1117; }
-    ::-webkit-scrollbar-thumb { background: #21262d; border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: #30363d; }
-
-    /* Animación badge RUN */
-    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-  </style>
+  <link rel="stylesheet" href="css/styles.css"/>
 </head>
 <body>
-  <div id="root"></div>
-  <!-- Compilado desde src/app.jsx — ver CONTRIBUTING.md para instrucciones de build -->
-  <script src="src/app.js"></script>
+  <div id="app"></div>
+  <script src="js/cpu.js"></script>
+  <script src="js/assembler.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/ui.js"></script>
 </body>
 </html>

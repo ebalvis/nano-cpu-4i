@@ -1,0 +1,265 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 540" width="800" height="540">
+  <defs>
+    <!-- gradientes -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#090c10"/>
+    </linearGradient>
+    <linearGradient id="cpuGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#141b24"/>
+      <stop offset="100%" stop-color="#0d1117"/>
+    </linearGradient>
+    <linearGradient id="pcGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a3a5c"/>
+      <stop offset="100%" stop-color="#0d1a2a"/>
+    </linearGradient>
+    <linearGradient id="irGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a1f2a"/>
+      <stop offset="100%" stop-color="#0d1117"/>
+    </linearGradient>
+    <linearGradient id="zfGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2a1020"/>
+      <stop offset="100%" stop-color="#180a0a"/>
+    </linearGradient>
+    <linearGradient id="mpGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#132038"/>
+      <stop offset="100%" stop-color="#0a1525"/>
+    </linearGradient>
+    <linearGradient id="mdGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0d2c1a"/>
+      <stop offset="100%" stop-color="#081510"/>
+    </linearGradient>
+    <!-- sombras -->
+    <filter id="glow-blue" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-green" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.6"/>
+    </filter>
+    <!-- marcador flecha azul -->
+    <marker id="arr-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#58a6ff"/>
+    </marker>
+    <!-- marcador flecha verde -->
+    <marker id="arr-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#3fb950"/>
+    </marker>
+    <!-- marcador flecha bidireccional verde (inicio) -->
+    <marker id="arr-green-start" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto-start-reverse">
+      <path d="M0,0 L0,6 L8,3 z" fill="#3fb950"/>
+    </marker>
+  </defs>
+
+  <!-- ══ FONDO ══ -->
+  <rect width="800" height="540" fill="url(#bgGrad)" rx="12"/>
+  <!-- grid sutil -->
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-width="0.15" opacity="0.04"/>
+  </pattern>
+  <rect width="800" height="540" fill="url(#grid)" rx="12"/>
+
+  <!-- ══ TÍTULO ══ -->
+  <text x="400" y="32" text-anchor="middle" font-family="'Courier New',monospace" font-size="13" font-weight="bold" fill="#58a6ff" letter-spacing="4" opacity="0.9">MÁQUINA SIMPLE — ARQUITECTURA DEL PROCESADOR</text>
+  <line x1="60" y1="40" x2="740" y2="40" stroke="#21262d" stroke-width="1"/>
+
+  <!-- ══ CPU BOX ══ -->
+  <rect x="50" y="56" width="700" height="230" rx="10" fill="url(#cpuGrad)" stroke="#30363d" stroke-width="1.5" filter="url(#shadow)"/>
+  <!-- etiqueta CPU -->
+  <rect x="50" y="50" width="52" height="18" rx="4" fill="#21262d"/>
+  <text x="76" y="62" text-anchor="middle" font-family="'Courier New',monospace" font-size="9" fill="#636e7b" letter-spacing="2">CPU</text>
+
+  <!-- ─── REGISTRO PC ─── -->
+  <rect x="80" y="80" width="150" height="110" rx="8" fill="url(#pcGrad)" stroke="#2a5080" stroke-width="1.5" filter="url(#shadow)"/>
+  <!-- header PC -->
+  <rect x="80" y="80" width="150" height="28" rx="8" fill="#1f3a5c"/>
+  <rect x="80" y="96" width="150" height="12" fill="#1f3a5c"/>
+  <text x="155" y="97" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#79c0ff" letter-spacing="3">PC</text>
+  <!-- valor hex -->
+  <text x="155" y="136" text-anchor="middle" font-family="'Courier New',monospace" font-size="32" font-weight="bold" fill="#58a6ff">00</text>
+  <!-- bits visuales -->
+  <g transform="translate(90,158)">
+    <rect x="0"  y="0" width="16" height="16" rx="3" fill="#0d1117" stroke="#1a3a5c" stroke-width="1"/>
+    <rect x="19" y="0" width="16" height="16" rx="3" fill="#0d1117" stroke="#1a3a5c" stroke-width="1"/>
+    <rect x="38" y="0" width="16" height="16" rx="3" fill="#0d1117" stroke="#1a3a5c" stroke-width="1"/>
+    <rect x="57" y="0" width="16" height="16" rx="3" fill="#0d1117" stroke="#1a3a5c" stroke-width="1"/>
+    <rect x="76" y="0" width="16" height="16" rx="3" fill="#0d1117" stroke="#1a3a5c" stroke-width="1"/>
+    <rect x="95" y="0" width="16" height="16" rx="3" fill="#0d1117" stroke="#1a3a5c" stroke-width="1"/>
+    <rect x="114" y="0" width="16" height="16" rx="3" fill="#1a3a5c" stroke="#2a5080" stroke-width="1"/>
+    <text x="8"   y="12" text-anchor="middle" font-family="monospace" font-size="9" fill="#21262d">0</text>
+    <text x="27"  y="12" text-anchor="middle" font-family="monospace" font-size="9" fill="#21262d">0</text>
+    <text x="46"  y="12" text-anchor="middle" font-family="monospace" font-size="9" fill="#21262d">0</text>
+    <text x="65"  y="12" text-anchor="middle" font-family="monospace" font-size="9" fill="#21262d">0</text>
+    <text x="84"  y="12" text-anchor="middle" font-family="monospace" font-size="9" fill="#21262d">0</text>
+    <text x="103" y="12" text-anchor="middle" font-family="monospace" font-size="9" fill="#21262d">0</text>
+    <text x="122" y="12" text-anchor="middle" font-family="monospace" font-size="9" fill="#58a6ff" font-weight="bold">0</text>
+  </g>
+  <text x="155" y="200" text-anchor="middle" font-family="'Courier New',monospace" font-size="8" fill="#444c56">7 bits</text>
+
+  <!-- ─── REGISTRO RI / IR ─── -->
+  <rect x="260" y="80" width="310" height="110" rx="8" fill="url(#irGrad)" stroke="#30363d" stroke-width="1.5" filter="url(#shadow)"/>
+  <!-- header RI -->
+  <rect x="260" y="80" width="310" height="28" rx="8" fill="#1a1f2a"/>
+  <rect x="260" y="96" width="310" height="12" fill="#1a1f2a"/>
+  <text x="415" y="97" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#adbac7" letter-spacing="3">RI — REGISTRO DE INSTRUCCIÓN</text>
+  <!-- valor hex -->
+  <text x="415" y="134" text-anchor="middle" font-family="'Courier New',monospace" font-size="28" font-weight="bold" fill="#adbac7">0x0000</text>
+  <!-- campos de bits con colores -->
+  <!-- OP (2 bits) rojo -->
+  <rect x="272" y="148" width="44" height="26" rx="4" fill="#2a0a0a" stroke="#6a2020" stroke-width="1.5"/>
+  <text x="294" y="158" text-anchor="middle" font-family="'Courier New',monospace" font-size="8" fill="#f87171" font-weight="bold">OP</text>
+  <text x="294" y="169" text-anchor="middle" font-family="'Courier New',monospace" font-size="8" fill="#6a2020">2 bits</text>
+  <!-- Campo A (7 bits) verde -->
+  <rect x="322" y="148" width="104" height="26" rx="4" fill="#0a1a0a" stroke="#2d6a35" stroke-width="1.5"/>
+  <text x="374" y="158" text-anchor="middle" font-family="'Courier New',monospace" font-size="8" fill="#4ade80" font-weight="bold">CAMPO A</text>
+  <text x="374" y="169" text-anchor="middle" font-family="'Courier New',monospace" font-size="8" fill="#2d6a35">7 bits — dirección src</text>
+  <!-- Campo B (7 bits) azul -->
+  <rect x="432" y="148" width="104" height="26" rx="4" fill="#0a1025" stroke="#2a5080" stroke-width="1.5"/>
+  <text x="484" y="158" text-anchor="middle" font-family="'Courier New',monospace" font-size="8" fill="#60a5fa" font-weight="bold">CAMPO B</text>
+  <text x="484" y="169" text-anchor="middle" font-family="'Courier New',monospace" font-size="8" fill="#2a5080">7 bits — dirección dst</text>
+  <text x="415" y="200" text-anchor="middle" font-family="'Courier New',monospace" font-size="8" fill="#444c56">16 bits</text>
+
+  <!-- ─── REGISTRO ZF ─── -->
+  <rect x="600" y="80" width="130" height="110" rx="8" fill="url(#zfGrad)" stroke="#5c1e1e" stroke-width="1.5" filter="url(#shadow)"/>
+  <!-- header ZF -->
+  <rect x="600" y="80" width="130" height="28" rx="8" fill="#2a1020"/>
+  <rect x="600" y="96" width="130" height="12" fill="#2a1020"/>
+  <text x="665" y="97" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="#f47067" letter-spacing="2">ZF — FLAG ZERO</text>
+  <!-- círculo indicador -->
+  <circle cx="665" cy="148" r="24" fill="#180a0a" stroke="#5c1e1e" stroke-width="2"/>
+  <text x="665" y="154" text-anchor="middle" font-family="'Courier New',monospace" font-size="24" font-weight="bold" fill="#f47067">0</text>
+  <text x="665" y="198" text-anchor="middle" font-family="'Courier New',monospace" font-size="8" fill="#444c56">1 bit</text>
+
+  <!-- ══ CONECTORES INTERNOS CPU ══ -->
+  <!-- PC ↔ RI (línea interna) -->
+  <line x1="230" y1="135" x2="260" y2="135" stroke="#21262d" stroke-width="1" stroke-dasharray="3,3"/>
+  <!-- RI ↔ ZF -->
+  <line x1="570" y1="135" x2="600" y2="135" stroke="#21262d" stroke-width="1" stroke-dasharray="3,3"/>
+
+  <!-- ══ BUS DE DIRECCIONES ══ -->
+  <!-- bajada vertical desde PC -->
+  <line x1="155" y1="290" x2="155" y2="360" stroke="#58a6ff" stroke-width="3" marker-end="url(#arr-blue)" filter="url(#glow-blue)"/>
+  <!-- etiqueta bus dir -->
+  <rect x="60" y="310" width="82" height="38" rx="5" fill="#0d1a25" stroke="#2a5080" stroke-width="1"/>
+  <text x="101" y="325" text-anchor="middle" font-family="'Courier New',monospace" font-size="8" fill="#444c56" letter-spacing="1">BUS DIR.</text>
+  <text x="101" y="340" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" font-weight="bold" fill="#58a6ff">7 bits</text>
+
+  <!-- ══ BUS DE DATOS ══ -->
+  <!-- bajada vertical desde RI (bidireccional) -->
+  <line x1="560" y1="290" x2="560" y2="360" stroke="#3fb950" stroke-width="3" marker-end="url(#arr-green)" marker-start="url(#arr-green-start)" filter="url(#glow-green)"/>
+  <!-- etiqueta bus datos -->
+  <rect x="572" y="310" width="90" height="38" rx="5" fill="#0d2010" stroke="#2d6a35" stroke-width="1"/>
+  <text x="617" y="325" text-anchor="middle" font-family="'Courier New',monospace" font-size="8" fill="#444c56" letter-spacing="1">BUS DATOS</text>
+  <text x="617" y="340" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" font-weight="bold" fill="#3fb950">16 bits</text>
+
+  <!-- ══ LÍNEA BASE CPU → MEMORIAS ══ -->
+  <line x1="155" y1="290" x2="560" y2="290" stroke="#21262d" stroke-width="1" stroke-dasharray="4,4" opacity="0.5"/>
+
+  <!-- ══ MEMORIA DE PROGRAMA ══ -->
+  <rect x="50" y="370" width="330" height="145" rx="8" fill="url(#mpGrad)" stroke="#2a5080" stroke-width="1.5" filter="url(#shadow)"/>
+  <!-- header -->
+  <rect x="50" y="370" width="330" height="32" rx="8" fill="#1a3a5c"/>
+  <rect x="50" y="388" width="330" height="14" fill="#1a3a5c"/>
+  <text x="215" y="390" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" font-weight="bold" fill="#79c0ff" letter-spacing="2">MEMORIA DE PROGRAMA</text>
+  <!-- filas de código máquina -->
+  <g font-family="'Courier New',monospace" font-size="10">
+    <!-- fila 0 -->
+    <rect x="66" y="408" width="298" height="18" rx="3" fill="#0d1117" stroke="#21262d" stroke-width="0.5"/>
+    <text x="76" y="420" fill="#444c56">00</text>
+    <text x="102" y="420" fill="#f87171" font-weight="bold">00</text>
+    <text x="122" y="420" fill="#4ade80">0000000</text>
+    <text x="196" y="420" fill="#60a5fa">0000101</text>
+    <text x="270" y="420" fill="#636e7b">mov CERO,RDO</text>
+    <!-- fila 1 -->
+    <rect x="66" y="430" width="298" height="18" rx="3" fill="#0d1117" stroke="#21262d" stroke-width="0.5"/>
+    <text x="76" y="442" fill="#444c56">01</text>
+    <text x="102" y="442" fill="#f87171" font-weight="bold">10</text>
+    <text x="122" y="442" fill="#4ade80">0000011</text>
+    <text x="196" y="442" fill="#60a5fa">0000001</text>
+    <text x="270" y="442" fill="#636e7b">cmp CONTAD,NUM2</text>
+    <!-- fila 2 — PC activo -->
+    <rect x="66" y="452" width="298" height="18" rx="3" fill="#0d2c1a" stroke="#3fb950" stroke-width="1"/>
+    <text x="76" y="464" fill="#3fb950" font-weight="bold">▶ 02</text>
+    <text x="110" y="464" fill="#f87171" font-weight="bold">11</text>
+    <text x="130" y="464" fill="#4ade80">0000000</text>
+    <text x="204" y="464" fill="#60a5fa">0001000</text>
+    <text x="278" y="464" fill="#3fb950">beq FIN</text>
+    <!-- fila 3 -->
+    <rect x="66" y="472" width="298" height="18" rx="3" fill="#0d1117" stroke="#21262d" stroke-width="0.5"/>
+    <text x="76" y="484" fill="#444c56">03</text>
+    <text x="102" y="484" fill="#f87171" font-weight="bold">01</text>
+    <text x="122" y="484" fill="#4ade80">0000000</text>
+    <text x="196" y="484" fill="#60a5fa">0000100</text>
+    <text x="270" y="484" fill="#636e7b">add NUM1,RDO</text>
+  </g>
+  <!-- badge solo lectura -->
+  <rect x="56" y="496" width="88" height="14" rx="3" fill="#0a1525" stroke="#1a3a5c" stroke-width="1"/>
+  <text x="100" y="506" text-anchor="middle" font-family="'Courier New',monospace" font-size="8" fill="#2a5080">Solo lectura</text>
+  <!-- tamaño -->
+  <text x="215" y="506" text-anchor="middle" font-family="'Courier New',monospace" font-size="8" fill="#21262d">128 × 16 bits  ·  dir. 0x00 – 0x7F</text>
+
+  <!-- ══ MEMORIA DE DATOS ══ -->
+  <rect x="420" y="370" width="330" height="145" rx="8" fill="url(#mdGrad)" stroke="#2d6a35" stroke-width="1.5" filter="url(#shadow)"/>
+  <!-- header -->
+  <rect x="420" y="370" width="330" height="32" rx="8" fill="#0d3320"/>
+  <rect x="420" y="388" width="330" height="14" fill="#0d3320"/>
+  <text x="585" y="390" text-anchor="middle" font-family="'Courier New',monospace" font-size="11" font-weight="bold" fill="#3fb950" letter-spacing="2">MEMORIA DE DATOS</text>
+  <!-- filas de datos -->
+  <g font-family="'Courier New',monospace" font-size="10">
+    <!-- NUM1 -->
+    <rect x="436" y="408" width="298" height="18" rx="3" fill="#0d1117" stroke="#21262d" stroke-width="0.5"/>
+    <text x="446" y="420" fill="#444c56">00</text>
+    <text x="466" y="420" fill="#0088cc">NUM1</text>
+    <rect x="520" y="410" width="60" height="14" rx="2" fill="#111827" stroke="#2d6a35" stroke-width="0.5"/>
+    <text x="550" y="420" text-anchor="middle" fill="#4ade80">0x0002</text>
+    <text x="590" y="420" fill="#636e7b">= 2</text>
+    <!-- NUM2 -->
+    <rect x="436" y="430" width="298" height="18" rx="3" fill="#0d1117" stroke="#21262d" stroke-width="0.5"/>
+    <text x="446" y="442" fill="#444c56">01</text>
+    <text x="466" y="442" fill="#0088cc">NUM2</text>
+    <rect x="520" y="432" width="60" height="14" rx="2" fill="#111827" stroke="#2d6a35" stroke-width="0.5"/>
+    <text x="550" y="442" text-anchor="middle" fill="#4ade80">0x0003</text>
+    <text x="590" y="442" fill="#636e7b">= 3</text>
+    <!-- RDO — referenciado -->
+    <rect x="436" y="452" width="298" height="18" rx="3" fill="#0d3320" stroke="#3fb950" stroke-width="1"/>
+    <text x="446" y="464" fill="#3fb950" font-weight="bold">02</text>
+    <text x="466" y="464" fill="#0088cc">RDO</text>
+    <rect x="520" y="454" width="60" height="14" rx="2" fill="#0d3320" stroke="#3fb950" stroke-width="1"/>
+    <text x="550" y="464" text-anchor="middle" fill="#3fb950" font-weight="bold">0x0006</text>
+    <text x="590" y="464" fill="#3fb950" font-weight="bold">= 6 ◀</text>
+    <!-- CONTAD -->
+    <rect x="436" y="472" width="298" height="18" rx="3" fill="#0d1117" stroke="#21262d" stroke-width="0.5"/>
+    <text x="446" y="484" fill="#444c56">03</text>
+    <text x="466" y="484" fill="#0088cc">CONTAD</text>
+    <rect x="520" y="474" width="60" height="14" rx="2" fill="#111827" stroke="#21262d" stroke-width="0.5"/>
+    <text x="550" y="484" text-anchor="middle" fill="#4ade80">0x0003</text>
+    <text x="590" y="484" fill="#636e7b">= 3</text>
+  </g>
+  <!-- badge lectura/escritura -->
+  <rect x="426" y="496" width="104" height="14" rx="3" fill="#081510" stroke="#1f5c30" stroke-width="1"/>
+  <text x="478" y="506" text-anchor="middle" font-family="'Courier New',monospace" font-size="8" fill="#2d6a35">Lectura / escritura</text>
+  <text x="585" y="506" text-anchor="middle" font-family="'Courier New',monospace" font-size="8" fill="#21262d">128 × 16 bits  ·  dir. 0x00 – 0x7F</text>
+
+  <!-- ══ SEPARADOR MEMORIAS ══ -->
+  <line x1="400" y1="372" x2="400" y2="512" stroke="#1a2030" stroke-width="1.5"/>
+  <text x="400" y="540" text-anchor="middle" font-family="'Courier New',monospace" font-size="8" fill="#21262d" letter-spacing="2">Arquitectura Harvard — buses físicamente separados</text>
+
+  <!-- ══ LEYENDA CAMPOS IR ══ -->
+  <g transform="translate(50, 522)" font-family="'Courier New',monospace" font-size="9">
+    <rect x="0" y="0" width="10" height="10" rx="2" fill="#2a0a0a" stroke="#6a2020"/>
+    <text x="15" y="9" fill="#f87171">OP (2b)</text>
+    <rect x="80" y="0" width="10" height="10" rx="2" fill="#0a1a0a" stroke="#2d6a35"/>
+    <text x="95" y="9" fill="#4ade80">Campo A (7b)</text>
+    <rect x="200" y="0" width="10" height="10" rx="2" fill="#0a1025" stroke="#2a5080"/>
+    <text x="215" y="9" fill="#60a5fa">Campo B (7b)</text>
+    <rect x="320" y="0" width="10" height="10" rx="2" fill="#0d3320" stroke="#3fb950"/>
+    <text x="335" y="9" fill="#3fb950">▶ PC actual</text>
+    <rect x="420" y="0" width="10" height="10" rx="2" fill="#0d1117" stroke="#0088cc"/>
+    <text x="435" y="9" fill="#0088cc">Símbolo dato</text>
+  </g>
+
+</svg>

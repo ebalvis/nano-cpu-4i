@@ -1,130 +1,120 @@
 # Guía de uso del simulador
 
-## Interfaz general
+## Pantalla principal — Editor
 
-```
-┌─────────────────────┬────────────────────────────────┬────────────────────┐
-│   EDITOR FUENTE     │   PC  │  RI — REG. INSTRUCCIÓN │  TABLA SÍMBOLOS    │
-│   (terminal verde)  │       │  ZF                     │  BREAKPOINTS       │
-│                     ├───────┴─────────────────────────┤  TRAZA EJECUCIÓN   │
-│                     │   ▶ NEXT — próxima instrucción  │                    │
-│                     ├─────────────────────────────────┤                    │
-│                     │   LISTADO DE PROGRAMA           │                    │
-│                     │   (instrucciones + datos)       │                    │
-└─────────────────────┴─────────────────────────────────┴────────────────────┘
-```
+Al abrir el simulador se muestra el editor ensamblador.
+
+**Botones de ejemplo** — carga uno de los 4 programas de demostración.
+
+**Editor** — escribe o pega tu programa. La sintaxis se valida al ensamblar.
+
+**▶ Ensamblar** — compila el fuente. Si hay errores se muestran en rojo; si no, pasa a la pantalla de ejecución.
+
+**Juego de instrucciones** — referencia rápida siempre visible bajo el editor.
 
 ---
 
-## Panel izquierdo — Editor
+## Pantalla de ejecución
 
-- Escribe o pega tu programa en lenguaje ensamblador
-- Pulsa **ENSAMBLAR ▶** para compilar
-- Los errores aparecen en rojo bajo el editor
-- La referencia ISA integrada está siempre visible
-
----
-
-## Barra de control
+### Barra de controles
 
 | Botón | Acción |
 |---|---|
-| ⏭ **PASO** | Ejecuta una sola instrucción (fetch-decode-execute) |
-| ▶ **RUN** | Ejecución continua hasta HALT o breakpoint |
-| ⏸ **STOP** | Pausa la ejecución continua |
-| ↺ **RESET** | Reinicia PC=0 y datos a sus valores iniciales |
-| Slider **VEL** | Velocidad: desliza a la derecha para ir más rápido |
+| ← Editor | Vuelve al editor (no pierde el programa) |
+| ⏭ Paso | Ejecuta una instrucción (fetch-decode-execute) |
+| ▶ Ejecutar | Ejecución continua hasta HALT o breakpoint |
+| ⏸ Parar | Pausa la ejecución continua |
+| ↺ Reset | Reinicia PC=0 y datos a sus valores iniciales |
+| Slider Velocidad | Desliza a la derecha para ir más rápido |
 
-**Indicadores de estado:**
-- 🟢 **READY** — listo para ejecutar
-- 🟠 **RUN** — ejecución continua en curso
+**Estados en el header:**
+- 🟢 **EJECUTANDO** — animado, ejecución continua en curso
 - 🔴 **HALT** — programa terminado
 
 ---
 
-## Panel central — CPU
+## Panel CPU
 
-### Contador de Programa (PC)
-- Muestra la dirección de la instrucción actual en **hex** y **decimal**
-- Representación binaria de 7 bits del bus de direcciones
-- **Editable**: haz clic → escribe el nuevo valor (decimal o `0x…`) → Enter
+### PC — Contador de Programa
+Dirección de la próxima instrucción en hexadecimal.
 
-### Registro de Instrucción (RI)
-- Muestra el mnemónico de la última instrucción ejecutada
-- 16 bits coloreados por campo:
-  - 🔴 Bits 15-14 = OP (opcode)
-  - 🟢 Bits 13-7  = Campo A
-  - 🔵 Bits 6-0   = Campo B
-
-### Flag Zero (ZF)
-- Indicador circular: 🟢 verde = 1 (activo) · 🔴 rojo = 0 (inactivo)
-- Se actualiza al ejecutar `CMP`
-
-### Banda ▶ NEXT
-- Muestra la **próxima instrucción** a ejecutar con los valores actuales de los operandos
-- Los operandos aparecen con su nombre simbólico y valor: `RDO=6`
-- Muestra los campos binarios OP/A/B de la instrucción
-
----
-
-## Panel central — Listado
-
-Vista unificada de instrucciones y datos, estilo terminal retro:
+### RI — Registro de Instrucción
+La instrucción en ejecución desglosada en tres bloques:
 
 ```
- ○  00          mov   CERO   , RDO       0073
- ○  01          mov   CERO   , CONTAD    006C
- ●  02  BUCLE:  cmp   CONTAD , NUM2      84EC    ← breakpoint
- ▶  03          beq   FIN               C008    ← PC actual
-    04          add   NUM1   , RDO       4B0B
-    —— datos ——
-    09  NUM1:   dato  0002    → 0002  (2)
-    0A  NUM2:   dato  0003    → 0003  (3)
-    0B  RDO:    dato  0000    → 0006  (6)   ◀  ← referenciado por NEXT
+┌──────┐ ┌───────────────┐ ┌───────────────┐
+│ 🔴OP │ │  🟢 Campo A   │ │  🔵 Campo B   │
+│ bits │ │     bits      │ │     bits      │
+│  hex │ │     hex       │ │     hex       │
+└──────┘ └───────────────┘ └───────────────┘
 ```
 
-- **○ / ●** — clic para activar/desactivar breakpoint
-- **▶** — instrucción apuntada por el PC
-- Las instrucciones ejecutadas se atenúan
-- Los valores de datos se actualizan en tiempo real
+Los bits iluminados (color vivo) son los que están a 1.
 
----
-
-## Breakpoints
-
-1. Haz clic en el círculo **○** a la izquierda de cualquier instrucción
-2. El círculo se vuelve **●** rojo — breakpoint activo
-3. Al pulsar **RUN**, la ejecución para justo antes de esa instrucción
-4. El log muestra `── BREAKPOINT @ PC=XX ──`
-
-**Panel de breakpoints** (panel derecho):
-- Lista todos los breakpoints activos con su etiqueta
-- Clic en **×** para eliminar uno
-- "borrar todos" elimina todos a la vez
+### ZF — Flag Zero
+- 🔵 Activo (=1): la última `cmp` encontró igualdad, el próximo `beq` saltará
+- Inactivo (=0): no saltará
 
 ---
 
 ## Tabla de símbolos
 
-- Lista todos los símbolos `dato` con su dirección y valor actual
-- Los símbolos referenciados por la próxima instrucción se resaltan en verde con `◀`
-- **Haz clic en cualquier símbolo** para editar su valor directamente (decimal o hex)
+Lista todos los datos declarados con `dato`. Muestra nombre, dirección y valor actual en hex.
+
+- Los símbolos referenciados por la **próxima instrucción** se resaltan en verde con `◀`
+- **Clic en cualquier fila** para editar el valor en tiempo real (acepta decimal o `0x` hex). Confirma con Enter, cancela con Escape.
+
+---
+
+## Listado de programa
+
+Vista unificada instrucciones + datos:
+
+```
+ ○  00          mov   CERO   , RDO       0073
+ ○  01          mov   CERO   , CONTAD    006C
+ ●  02  BUCLE:  cmp   CONTAD , NUM2      84EC   ← breakpoint activo
+ ▶  03          beq   FIN               C008   ← PC actual
+```
+
+- **○ / ●** — clic para activar/desactivar breakpoint
+- **▶** — instrucción apuntada por el PC
+- Instrucciones pasadas se atenúan
+- Columna derecha: código máquina en hex
+
+---
+
+## Breakpoints
+
+1. Clic en el círculo **○** a la izquierda de cualquier instrucción → se vuelve **●** rojo
+2. Al pulsar **Ejecutar**, la ejecución para justo antes de esa instrucción
+3. El panel de breakpoints (columna izquierda) lista todos los activos; clic para eliminar
+
+---
+
+## Memoria de datos
+
+Grid hexadecimal 8 columnas × 16 filas (128 celdas).
+
+- La cabecera de columna indica el offset (`+0`..`+7`)
+- La cabecera de fila indica la dirección base (`00`, `08`, `10`…)
+- Celdas vacías (valor 0) aparecen en oscuro
+- Celdas con valor aparecen en gris con borde
 
 ---
 
 ## Traza de ejecución
 
-Log de todos los pasos ejecutados:
+Log de todos los pasos ejecutados. El último paso aparece resaltado.
 
 ```
-#001 PC=00 MOV  [5]←[0]=0
-#002 PC=01 MOV  [3]←[0]=0
-#003 PC=02 CMP  [3]=0==[1]=3→ZF=0
+#001 PC=00 MOV [5]←0
+#002 PC=01 MOV [3]←0
+#003 PC=02 CMP 0==3→ZF=0
 ```
 
 Colores:
-- Gris — paso normal (pasado)
-- **Blanco** — último paso ejecutado
-- **Naranja** — parada en breakpoint
-- **Rojo** — HALT
-- **Verde** — modificación manual de PC
+- Gris oscuro — paso pasado
+- Blanco — último paso
+- Naranja — parada en breakpoint
+- Rojo — HALT

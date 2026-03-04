@@ -4,104 +4,87 @@
 
 ---
 
-## Configuración del entorno de desarrollo
+## Estructura del código
 
-### Requisitos
+```
+js/cpu.js        Núcleo CPU — solo lógica pura, sin DOM
+js/assembler.js  Ensamblador — EXAMPLE_CODE[], assemble()
+js/app.js        Estado global (state{}) y controladores (doStep, doRun…)
+js/ui.js         Renderizado — render(), renderEditor(), renderExecution()
+css/styles.css   Estilos retro-industrial
+```
 
-- Node.js ≥ 18 (solo para compilar el fuente JSX)
-- Cualquier navegador moderno (Chrome, Firefox, Edge, Safari)
-- Git
+El flujo de datos es unidireccional:
 
-### Instalar dependencias de build
+```
+Evento usuario → controlador en app.js → modifica state{} → render() → innerHTML
+```
+
+---
+
+## Desarrollo local
+
+No se necesita `npm install` ni ningún paso de compilación.
 
 ```bash
 git clone https://github.com/ebalvis/Simulador-interactivo-de-maquina-simple.git
 cd Simulador-interactivo-de-maquina-simple
-npm install
+
+# Opción A — abrir directamente
+open index.html
+
+# Opción B — servidor local (evita restricciones CORS)
+python3 -m http.server 8080
+# → http://localhost:8080
 ```
 
-### Desarrollo
-
-```bash
-# Compilar una vez
-npm run build
-
-# Compilar automáticamente al guardar cambios en src/app.jsx
-npm run watch
-
-# Servidor local de desarrollo
-npm run dev
-# Abre http://localhost:8080
-```
-
-> **Sin npm:** Si no tienes Node.js, puedes abrir `index.html` directamente.  
-> El fichero `src/app.js` ya compilado está versionado en el repo.
+Edita cualquier fichero `.js` o `.css` y recarga el navegador. Sin build.
 
 ---
 
 ## Flujo de trabajo
 
 1. Haz un **fork** del repositorio
-2. Crea una rama descriptiva:
+2. Crea una rama:
    ```bash
    git checkout -b feat/nombre-de-la-mejora
    ```
-3. Edita `src/app.jsx`
-4. Compila: `npm run build`
-5. Prueba abriendo `index.html` en el navegador
-6. Haz commit siguiendo la convención:
-   ```bash
-   git commit -m "feat: descripción de la mejora"
-   git commit -m "fix: descripción del arreglo"
-   git commit -m "docs: actualiza documentación"
+3. Edita los ficheros en `js/` o `css/`
+4. Prueba abriendo `index.html` en el navegador
+5. Haz commit siguiendo la convención:
    ```
-7. Abre un **Pull Request** describiendo los cambios
+   feat:     nueva funcionalidad
+   fix:      corrección de bug
+   docs:     cambios en documentación
+   style:    formato, espacios
+   refactor: refactorización sin cambio de comportamiento
+   ```
+6. Abre un **Pull Request**
 
 ---
 
-## Convención de commits
-
-```
-feat:     nueva funcionalidad
-fix:      corrección de bug
-docs:     cambios en documentación
-style:    formato, espacios (sin cambio funcional)
-refactor: refactorización sin cambio de comportamiento
-perf:     mejora de rendimiento
-test:     añadir o corregir tests
-chore:    tareas de mantenimiento (build, dependencias)
-```
-
----
-
-## Estructura del código fuente
-
-El fichero `src/app.jsx` está organizado en secciones claramente delimitadas:
-
-| Sección | Descripción |
-|---|---|
-| Constantes | `MEM`, `OP` |
-| `assemble()` | Ensamblador de dos pasadas |
-| `decode()` | Decodificador de instrucciones |
-| `makeCPU()` / `cpuStep()` | Estado y ciclo de ejecución de la CPU |
-| `DEMO_SRC` | Programa cargado por defecto |
-| `MaquinaSimple` | Componente principal React |
-| Subcomponentes | `NTag`, `StatusBadge`, `Btn` |
-
----
-
-## Añadir un nuevo ejemplo
+## Añadir un ejemplo
 
 1. Crea `examples/mi_ejemplo.asm` con comentarios descriptivos
-2. Añádelo a la tabla de `examples/README.md`
-3. Incluye comentarios que expliquen el algoritmo y los conceptos ilustrados
+2. Añade el nombre a `EXAMPLE_NAMES[]` en `js/assembler.js`
+3. Añade el código a `EXAMPLE_CODE["nombre"]` en `js/assembler.js`
+4. Actualiza la tabla en `examples/README.md`
+
+---
+
+## Añadir una instrucción
+
+1. `js/cpu.js` — añade a `OPCODES`, `INSTRUCTION_INFO` e implementa en `stepCPU()`
+2. `js/assembler.js` — añade el parsing en la pasada 2 de `assemble()`
+3. `js/ui.js` — añade clase CSS `.mn-nuevaInstr` en `css/styles.css`
+4. Documenta en `docs/isa.md`
 
 ---
 
 ## Reportar un bug
 
 Abre un issue con:
-- Descripción clara del problema
+- Descripción del problema
 - Pasos para reproducirlo
 - Programa ensamblador que lo provoca (si aplica)
 - Navegador y versión
@@ -110,4 +93,4 @@ Abre un issue con:
 
 ## Código de conducta
 
-Este proyecto se usa en un contexto académico. Se espera un trato respetuoso y constructivo en todas las interacciones.
+Proyecto de uso académico. Se espera un trato respetuoso en todas las interacciones.

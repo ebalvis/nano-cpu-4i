@@ -1,37 +1,47 @@
-# Máquina Simple — Simulador Interactivo
+# 🖥️ Simulador Interactivo de Máquina Simple
 
-Simulador didáctico de una CPU de arquitectura sencilla para la docencia de **Arquitectura de Computadores**.  
-Funciona directamente en el navegador sin instalación ni dependencias.
+<div align="center">
 
-[![GitHub Pages](https://img.shields.io/badge/Demo-GitHub%20Pages-blue?logo=github)](https://ebalvis.github.io/Simulador-interactivo-de-maquina-simple/)
-[![Licencia MIT](https://img.shields.io/badge/Licencia-MIT-green)](LICENSE)
+![versión](https://img.shields.io/badge/versión-1.0.0-222?style=flat-square&labelColor=222)
+![licencia](https://img.shields.io/badge/licencia-MIT-brightgreen?style=flat-square)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-deployed-2ea44f?style=flat-square&logo=github)
 
----
+**Simulador interactivo de una CPU simplificada con ensamblador integrado, ejecución paso a paso y visualización en tiempo real de registros, memoria y flags.**
 
-## Características
+🚀 [Demo en vivo](https://ebalvis.github.io/Simulador-interactivo-de-maquina-simple/) · 📖 [Manual de uso](docs/simulador.md) · ⚙️ [Set de instrucciones](docs/isa.md) · 📋 [Ejemplos](examples/)
 
-- **Editor ensamblador** integrado con sintaxis retro (terminal verde)
-- **Listado unificado** instrucciones + datos, como en el hardware de referencia de clase
-- **Registros en tiempo real**: PC editable, RI con bits coloreados, ZF animado
-- **Breakpoints**: activa/desactiva con un clic, RUN para automáticamente al llegar
-- **Tabla de símbolos** editable en ejecución
-- **Traza de ejecución** completa con log coloreado
-- Sin instalación — un solo fichero `index.html` + `src/app.js`
+</div>
 
 ---
 
-## Demo rápida
+## ✨ Características
+
+- **Editor ensamblador** integrado con sintaxis retro (terminal verde), 4 ejemplos cargables
+- **Listado unificado** instrucciones + datos con valores en tiempo real y código máquina hex
+- **Panel CPU** — PC, RI desglosado en campos OP/A/B (binario + hex), ZF animado, contador de ciclos
+- **Breakpoints** — activa/desactiva con un clic, ejecución RUN para automáticamente
+- **Tabla de símbolos** editable en ejecución (clic para modificar cualquier dato)
+- **Memoria de datos** — grid hex 8×16 (128 celdas) con valores en tiempo real
+- **Traza de ejecución** completa con log coloreado paso a paso
+- Sin instalación — abre `index.html` directamente en el navegador
+
+---
+
+## 🚀 Demo rápida
 
 ```asm
 .titulo Multiplicación
 
-      mov  CERO   , RDO
-      mov  CERO   , CONTAD
-BUCLE:cmp  CONTAD , NUM2
+      mov  CERO   , RDO       ; RDO ← 0
+      mov  CERO   , CONTAD    ; CONTAD ← 0
+BUCLE:cmp  CONTAD , NUM2      ; ¿terminamos?
       beq  FIN
-      add  NUM1   , RDO
-      add  UNO    , CONTAD
-      cmp  CERO   , CERO
+      add  NUM1   , RDO       ; RDO += NUM1
+      add  UNO    , CONTAD    ; CONTAD++
+      cmp  CERO   , CERO      ; salto incondicional
       beq  BUCLE
 FIN:  beq  FIN
 
@@ -45,88 +55,150 @@ CERO:   dato 0000
 
 ---
 
-## Arquitectura simulada
+## 🏗️ Arquitectura simulada
 
 | Elemento | Especificación |
 |---|---|
 | Bus de direcciones | 7 bits → 128 posiciones |
-| Bus de datos | 16 bits |
-| Memoria de programa | 128 × 16 bits (separada) |
-| Memoria de datos | 128 × 16 bits |
-| Registros | PC · RI (IR) · ZF |
+| Bus de datos | 16 bits sin signo |
+| Memoria de programa | 128 × 16 bits (solo lectura en ejecución) |
+| Memoria de datos | 128 × 16 bits (lectura/escritura) |
+| Registros | PC (7b) · RI/IR (16b) · ZF (1b) |
 
-### ISA (4 instrucciones)
+### ISA — 4 instrucciones
+
+| Instr | Binario | Operación |
+|---|---|---|
+| `MOV` | `00 AAAAAAA BBBBBBB` | `mem[B] ← mem[A]` |
+| `ADD` | `01 AAAAAAA BBBBBBB` | `mem[B] ← mem[B] + mem[A]` |
+| `CMP` | `10 AAAAAAA BBBBBBB` | `ZF ← (mem[A] == mem[B])` |
+| `BEQ` | `11 0000000 AAAAAAA` | `si ZF=1 : PC ← A` |
+
+Codificación de instrucción (16 bits):
 
 ```
-MOV  00 AAAAAAA BBBBBBB   mem[B] ← mem[A]
-ADD  01 AAAAAAA BBBBBBB   mem[B] ← mem[B] + mem[A]
-CMP  10 AAAAAAA BBBBBBB   ZF    ← (mem[A] == mem[B])
-BEQ  11 0000000 AAAAAAA   si ZF=1 : PC ← A
+ 15  14  13 ........  7   6 .........  0
+┌────────┬───────────────┬───────────────┐
+│  OP    │   Campo A     │   Campo B     │
+│ 2 bits │    7 bits     │    7 bits     │
+└────────┴───────────────┴───────────────┘
 ```
 
 ---
 
-## Uso
+## 📂 Estructura del repositorio
+
+```
+Simulador-interactivo-de-maquina-simple/
+│
+├── css/
+│   └── styles.css          Estilos retro-industrial (IBM Plex Mono)
+│
+├── js/
+│   ├── cpu.js              Núcleo CPU: createCPU, cloneCPU, decode, stepCPU
+│   ├── assembler.js        Ensamblador 2 pasadas + 4 ejemplos
+│   ├── app.js              Estado global y controladores
+│   └── ui.js               Renderizado completo con innerHTML
+│
+├── assets/
+│   ├── favicon.svg         Icono chip CPU
+│   └── arquitectura.svg    Diagrama de arquitectura
+│
+├── docs/
+│   ├── arquitectura.md     Hardware: buses, memorias, registros
+│   ├── isa.md              Juego de instrucciones detallado
+│   ├── ensamblador.md      Referencia del lenguaje ensamblador
+│   └── simulador.md        Guía de uso de la interfaz
+│
+├── examples/
+│   ├── multiplicacion.asm  Multiplicación por sumas repetidas
+│   ├── suma.asm            Suma de dos números
+│   ├── contador.asm        Contador 0..N (ideal para breakpoints)
+│   └── maximo.asm          Comprobación de igualdad
+│
+├── index.html              Punto de entrada (carga css/ + js/)
+├── .gitignore
+├── CHANGELOG.md
+├── CONTRIBUTING.md
+└── LICENSE
+```
+
+---
+
+## 🖥️ Uso
 
 ### Abrir directamente (sin servidor)
 
 ```bash
-open index.html          # macOS
-xdg-open index.html      # Linux
-start index.html         # Windows
+# macOS
+open index.html
+
+# Linux
+xdg-open index.html
+
+# Windows
+start index.html
 ```
 
-> Si el navegador bloquea scripts locales, usa un servidor local.
+> Si el navegador bloquea scripts locales por política CORS, usa un servidor local.
 
 ### Servidor local
 
 ```bash
+# Python
 python3 -m http.server 8080
-# → http://localhost:8080
+
+# Node.js (npx)
+npx serve .
+```
+
+Abre `http://localhost:8080` en el navegador.
+
+---
+
+## 🔧 Flujo de trabajo del ensamblador
+
+```
+Código fuente (.asm)
+        │
+        ▼
+  Pasada 1: recoger etiquetas → symCode{}, symData{}
+        │
+        ▼
+  Pasada 2: generar código máquina
+        │
+        ├─▶ progCode[]   → Memoria de programa (128 × 16b)
+        └─▶ dataInit{}   → Memoria de datos    (128 × 16b)
+                │
+                ▼
+          createCPU(progCode, dataInit)
+                │
+                ▼
+          stepCPU() × N   ← fetch → decode → execute
 ```
 
 ---
 
-## Estructura del repositorio
+## 📚 Documentación
 
-```
-Simulador-interactivo-de-maquina-simple/
-├── assets/                  Recursos estáticos (favicon, imágenes)
-├── docs/                    Documentación técnica
-│   ├── arquitectura.md      Descripción del hardware simulado
-│   ├── isa.md               Juego de instrucciones detallado
-│   ├── ensamblador.md       Referencia del lenguaje ensamblador
-│   └── simulador.md         Guía de uso de la interfaz
-├── examples/                Programas de ejemplo (.asm)
-│   ├── multiplicacion.asm   Multiplicación por sumas repetidas
-│   ├── suma.asm             Suma de dos números
-│   ├── contador.asm         Contador 0..N (ideal para breakpoints)
-│   └── maximo.asm           Comprobación de igualdad
-├── src/                     Código fuente
-│   ├── app.jsx              Fuente React/JSX (editar aquí)
-│   └── app.js               Compilado (referenciado desde index.html)
-├── .gitignore
-├── CHANGELOG.md
-├── CONTRIBUTING.md
-├── LICENSE
-├── README.md
-└── index.html               Punto de entrada de la aplicación
-```
+| Documento | Contenido |
+|---|---|
+| [Arquitectura](docs/arquitectura.md) | Diagrama de bloques, buses, memorias, ciclo F-D-E |
+| [ISA](docs/isa.md) | Las 4 instrucciones con ejemplos y codificación binaria |
+| [Ensamblador](docs/ensamblador.md) | Sintaxis, etiquetas, directivas, ejemplos |
+| [Simulador](docs/simulador.md) | Guía de uso de la interfaz, breakpoints, traza |
+| [Ejemplos](examples/) | 4 programas comentados listos para cargar |
+| [Contribuir](CONTRIBUTING.md) | Cómo contribuir al proyecto |
+| [Changelog](CHANGELOG.md) | Historial de versiones |
 
 ---
 
-## Documentación
-
-- [Arquitectura](docs/arquitectura.md)
-- [ISA — Juego de instrucciones](docs/isa.md)
-- [Lenguaje ensamblador](docs/ensamblador.md)
-- [Guía del simulador](docs/simulador.md)
-- [Ejemplos](examples/README.md)
-- [Cómo contribuir](CONTRIBUTING.md)
-- [Historial de cambios](CHANGELOG.md)
-
----
-
-## Licencia
+## 📄 Licencia
 
 [MIT](LICENSE) — libre para uso docente y académico.
+
+---
+
+<div align="center">
+<sub>Desarrollado para la asignatura de Arquitectura de Computadores · Universidad de Vigo</sub>
+</div>

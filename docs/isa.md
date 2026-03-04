@@ -2,113 +2,67 @@
 
 ## Resumen
 
-| Opcode | Binario | Mnemónico | Operación | Flags |
+| Opcode | Binario | Mnemónico | Operación | ZF |
 |---|---|---|---|---|
 | 0 | `00` | `MOV` | `mem[B] ← mem[A]` | — |
 | 1 | `01` | `ADD` | `mem[B] ← mem[B] + mem[A]` | — |
-| 2 | `10` | `CMP` | `ZF ← (mem[A] == mem[B])` | ZF |
+| 2 | `10` | `CMP` | `ZF ← (mem[A] == mem[B])` | ✓ |
 | 3 | `11` | `BEQ` | `si ZF=1 : PC ← B` | — |
 
 ---
 
-## MOV — Mover dato
+## MOV `00 AAAAAAA BBBBBBB`
 
-**Codificación:** `00 AAAAAAA BBBBBBB`
+`mem[B] ← mem[A]`
 
-**Operación:** `mem[B] ← mem[A]`
+Copia el contenido de la posición A en la posición B.
 
-Copia el contenido de la posición de datos A en la posición de datos B.
-
-```
-Antes:  mem[A] = 42,  mem[B] = 0
-Después: mem[A] = 42,  mem[B] = 42
-```
-
-**Ejemplo:**
 ```asm
-mov  CERO , RDO     ; RDO ← CERO (pone a 0 el resultado)
-mov  NUM1 , TEMP    ; TEMP ← NUM1 (copia de trabajo)
+mov  CERO , RDO     ; RDO ← 0 (inicializa resultado)
+mov  NUM1 , TEMP    ; TEMP ← NUM1
 ```
 
----
+## ADD `01 AAAAAAA BBBBBBB`
 
-## ADD — Sumar
+`mem[B] ← mem[B] + mem[A]`
 
-**Codificación:** `01 AAAAAAA BBBBBBB`
+Suma A al contenido de B. El resultado queda en B. Opera en 16 bits (mod 65536).
 
-**Operación:** `mem[B] ← mem[B] + mem[A]`
-
-Suma el contenido de la posición A al contenido de la posición B.  
-El resultado se guarda en B (acumulador destino).  
-Opera en aritmética de 16 bits sin signo con desbordamiento modular (mod 65536).
-
-```
-Antes:  mem[A] = 5,  mem[B] = 10
-Después: mem[A] = 5,  mem[B] = 15
-```
-
-**Ejemplo:**
 ```asm
 add  NUM1 , RDO     ; RDO ← RDO + NUM1
-add  UNO  , CONTAD  ; CONTAD ← CONTAD + 1
+add  UNO  , CONTAD  ; CONTAD++
 ```
 
----
+## CMP `10 AAAAAAA BBBBBBB`
 
-## CMP — Comparar
+`ZF ← (mem[A] == mem[B])`
 
-**Codificación:** `10 AAAAAAA BBBBBBB`
+Compara A y B. Si son iguales: ZF=1. Si son distintos: ZF=0. No modifica memoria.
 
-**Operación:** `ZF ← (mem[A] == mem[B])`
-
-Compara los contenidos de las posiciones A y B.  
-Si son iguales pone `ZF = 1`, si son distintos pone `ZF = 0`.  
-No modifica ninguna posición de memoria.
-
-```
-mem[A] = 15,  mem[B] = 15  →  ZF = 1
-mem[A] = 10,  mem[B] = 15  →  ZF = 0
-```
-
-**Ejemplo:**
 ```asm
 cmp  CONTAD , NUM2  ; ZF=1 si CONTAD==NUM2
-cmp  CERO   , CERO  ; ZF=1 siempre (truco para salto incondicional)
+cmp  CERO   , CERO  ; ZF=1 siempre (para salto incondicional)
+```
+
+## BEQ `11 0000000 AAAAAAA`
+
+`si ZF=1 : PC ← A`
+
+Salto condicional. Si ZF=1 salta a la instrucción A; si ZF=0 continúa en PC+1.
+
+```asm
+beq  FIN    ; salta a FIN si ZF=1
+beq  BUCLE  ; vuelve a BUCLE si ZF=1
 ```
 
 ---
 
-## BEQ — Saltar si igual (Branch if Equal)
+## Salto incondicional (truco)
 
-**Codificación:** `11 0000000 AAAAAAA`
-
-**Operación:** `si ZF=1 : PC ← A`
-
-Si el flag ZF está activo (=1), salta a la dirección de programa A.  
-Si ZF=0, continúa en la siguiente instrucción (PC+1).
-
-**Campo A:** dirección de programa (0..127).  
-**Campo B (campo A en la codificación):** no se usa (se codifica como 0000000).
-
-```
-ZF=1 → PC ← addr(ETIQUETA)
-ZF=0 → PC ← PC + 1  (sin salto)
-```
-
-**Ejemplo:**
-```asm
-BEQ  FIN        ; si ZF=1 salta a FIN
-BEQ  BUCLE      ; si ZF=1 vuelve a BUCLE
-```
-
----
-
-## Truco para salto incondicional
-
-La Máquina Simple no tiene instrucción JMP. Se consigue el salto incondicional con dos instrucciones:
+`BEQ` solo salta si ZF=1. Para salto incondicional:
 
 ```asm
-cmp  CERO , CERO   ; ZF ← 1  (siempre)
+cmp  CERO , CERO   ; ZF ← 1 (siempre)
 beq  DESTINO        ; salta siempre
 ```
 
