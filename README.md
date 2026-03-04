@@ -120,35 +120,32 @@ Simulador-interactivo-de-maquina-simple/
 
 ---
 
-## 🖥️ Uso
+## 🖥️ Ejecución en local
 
-### Abrir directamente (sin servidor)
-
-```bash
-# macOS
-open index.html
-
-# Linux
-xdg-open index.html
-
-# Windows
-start index.html
+El simulador es HTML + CSS + JS puro. Solo necesitas estos ficheros:
+```
+index.html
+css/styles.css
+js/cpu.js
+js/assembler.js
+js/app.js
+js/ui.js
 ```
 
-> Si el navegador bloquea scripts locales por política CORS, usa un servidor local.
+Cópialos a cualquier carpeta y abre `index.html` en el navegador. Sin instalación, sin compilación.
 
-### Servidor local
+> ⚠️ Si la página aparece en blanco, el navegador puede estar bloqueando scripts locales por CORS.  
+> Solución: abre una terminal en la carpeta y lanza un servidor mínimo:
+>
+> ```bash
+> # Python (macOS / Linux — viene instalado)
+> python3 -m http.server 8080
+> # → http://localhost:8080
+>
+> # VS Code: clic derecho sobre index.html → Open with Live Server
+> ```
 
-```bash
-# Python
-python3 -m http.server 8080
-
-# Node.js (npx)
-npx serve .
-```
-
-Abre `http://localhost:8080` en el navegador.
-
+🚀 O usa directamente la **[demo en vivo](https://ebalvis.github.io/Simulador-interactivo-de-maquina-simple/)** sin instalar nada.
 ---
 
 ## 🔧 Flujo de trabajo del ensamblador
