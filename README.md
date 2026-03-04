@@ -186,6 +186,18 @@ Código fuente (.asm)
 | [Changelog](CHANGELOG.md) | Historial de versiones |
 
 ---
+## 🎓 Contexto académico
+
+Este simulador se desarrolló como material didáctico para la asignatura:
+
+| | |
+|---|---|
+| **Asignatura** | Arquitectura de Computadoras I |
+| **Centro** | [Escola Superior de Enxeñaría Informática (ESEI)](https://esei.uvigo.es/) |
+| **Universidad** | [Universidade de Vigo](https://uvigo.gal/) |
+| **Departamento** | [Departamento de Enxeñaría dos Sistemas e da Computación Automática](https://desa.webs.uvigo.gal/) |
+
+Forma parte del conjunto de herramientas de apoyo a la docencia del área de Arquitectura y Organización de Computadores.
 
 ## 📄 Licencia
 
