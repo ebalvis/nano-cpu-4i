@@ -41,13 +41,9 @@ Dirección de la próxima instrucción en hexadecimal.
 ### RI — Registro de Instrucción
 La instrucción en ejecución desglosada en tres bloques:
 
-```
-┌──────┐ ┌───────────────┐ ┌───────────────┐
-│ 🔴OP │ │  🟢 Campo A   │ │  🔵 Campo B   │
-│ bits │ │     bits      │ │     bits      │
-│  hex │ │     hex       │ │     hex       │
-└──────┘ └───────────────┘ └───────────────┘
-```
+<img src="../assets/ri-campos.png" alt="Editor de ensamblador con referencia del set de instrucciones" width="700">
+
+</div>
 
 Los bits iluminados (color vivo) son los que están a 1.
 
