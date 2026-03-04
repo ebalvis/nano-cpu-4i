@@ -8,6 +8,8 @@
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 ![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-deployed-2ea44f?style=flat-square&logo=github)
+[![UVigo](https://img.shields.io/badge/Universidade_de_Vigo-003865?style=flat-square&logo=academia&logoColor=white)](https://desa.webs.uvigo.gal/)
+[![ESEI](https://img.shields.io/badge/ESEI-Informática-0057A8?style=flat-square)](https://esei.uvigo.es/)
 
 **Simulador interactivo de una CPU simplificada con ensamblador integrado, ejecución paso a paso y visualización en tiempo real de registros, memoria y flags.**
 
