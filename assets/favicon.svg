@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <rect width="32" height="32" rx="6" fill="#0d1117"/>
+  <!-- chip body -->
+  <rect x="9" y="9" width="14" height="14" rx="2" fill="none" stroke="#58a6ff" stroke-width="1.5"/>
+  <!-- pins izquierda -->
+  <line x1="5" y1="12" x2="9" y2="12" stroke="#3fb950" stroke-width="1.5"/>
+  <line x1="5" y1="16" x2="9" y2="16" stroke="#3fb950" stroke-width="1.5"/>
+  <line x1="5" y1="20" x2="9" y2="20" stroke="#3fb950" stroke-width="1.5"/>
+  <!-- pins derecha -->
+  <line x1="23" y1="12" x2="27" y2="12" stroke="#3fb950" stroke-width="1.5"/>
+  <line x1="23" y1="16" x2="27" y2="16" stroke="#3fb950" stroke-width="1.5"/>
+  <line x1="23" y1="20" x2="27" y2="20" stroke="#3fb950" stroke-width="1.5"/>
+  <!-- pins arriba -->
+  <line x1="13" y1="5" x2="13" y2="9" stroke="#3fb950" stroke-width="1.5"/>
+  <line x1="19" y1="5" x2="19" y2="9" stroke="#3fb950" stroke-width="1.5"/>
+  <!-- pins abajo -->
+  <line x1="13" y1="23" x2="13" y2="27" stroke="#3fb950" stroke-width="1.5"/>
+  <line x1="19" y1="23" x2="19" y2="27" stroke="#3fb950" stroke-width="1.5"/>
+  <!-- interior: "MS" -->
+  <text x="16" y="18.5" font-family="monospace" font-size="6" fill="#58a6ff" text-anchor="middle" font-weight="bold">MS</text>
+</svg>
