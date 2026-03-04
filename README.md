@@ -11,7 +11,7 @@
 
 **Simulador interactivo de una CPU simplificada con ensamblador integrado, ejecución paso a paso y visualización en tiempo real de registros, memoria y flags.**
 
-🚀 [Demo en vivo](https://ebalvis.github.io/Simulador-interactivo-de-maquina-simple/) · 📖 [Manual de uso](docs/simulador.md) · ⚙️ [Set de instrucciones](docs/isa.md) · 📋 [Ejemplos](examples/)
+🚀 [Demo en vivo](https://ebalvis.github.io/nano-cpu-4i/) · 📖 [Manual de uso](docs/simulador.md) · ⚙️ [Set de instrucciones](docs/isa.md) · 📋 [Ejemplos](examples/)
 
 </div>
 
