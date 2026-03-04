@@ -76,14 +76,9 @@ CERO:   dato 0000
 
 Codificación de instrucción (16 bits):
 
-```
- 15  14  13 ........  7   6 .........  0
-┌────────┬───────────────┬───────────────┐
-│  OP    │   Campo A     │   Campo B     │
-│ 2 bits │    7 bits     │    7 bits     │
-└────────┴───────────────┴───────────────┘
-```
+<img src="assets/bits-instruccion.png" alt="Instrucción (16 bits)" width="700">
 
+</div>
 ---
 
 ## 📂 Estructura del repositorio
