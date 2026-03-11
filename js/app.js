@@ -18,7 +18,7 @@ function doAssemble() {
   var r = assemble(state.source);
   state.asmResult = r;
   if (r.errors.length === 0) {
-    state.cpu = createCPU(r.progCode, r.dataInit);
+    state.cpu = createCPU(r.mem);
     state.assembled = true;
     state.running = false;
     state.breakpoints = {};
@@ -51,7 +51,7 @@ function doReset() {
   state.running = false;
   if (state.intervalId) { clearInterval(state.intervalId); state.intervalId = null; }
   if (state.asmResult && state.asmResult.errors.length === 0)
-    state.cpu = createCPU(state.asmResult.progCode, state.asmResult.dataInit);
+    state.cpu = createCPU(state.asmResult.mem);
   render();
 }
 

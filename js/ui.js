@@ -111,12 +111,12 @@ function renderExecution() {
     /* símbolos referenciados por la próxima instrucción */
     var refSet = {};
     if (cpu && !cpu.halted) {
-      var nxt = decode(cpu.prog[cpu.pc]);
+      var nxt = decode(cpu.mem[cpu.pc]);
       if (nxt.name==="mov"||nxt.name==="add") { refSet[nxt.s]=true; refSet[nxt.d]=true; }
       if (nxt.name==="cmp") { refSet[nxt.a]=true; refSet[nxt.b]=true; }
     }
     Object.keys(r.symData).forEach(function(name) {
-      var addr = r.symData[name], val = cpu ? cpu.data[addr] : 0, hi = refSet[addr];
+      var addr = r.symData[name], val = cpu ? cpu.mem[addr] : 0, hi = refSet[addr];
       var isEditing = state.editCell && state.editCell.addr === addr;
       var badge = isEditing
         ? '<input class="sym-edit-input" value="' + escHtml(state.editCell.val) + '" ' +
@@ -213,6 +213,7 @@ function renderExecution() {
 
   /* ── panel memoria hex ── */
   var COLS = 8;
+  var progEnd = r ? r.progEnd : 0;
   var memHeader = '<div></div>';
   for (var c = 0; c < COLS; c++) memHeader += '<div class="mem-col-h">+' + c.toString(16).toUpperCase() + '</div>';
   var memRows = "";
@@ -220,16 +221,29 @@ function renderExecution() {
     memRows += '<div class="mem-row-h">' + toHex2(row * COLS) + '</div>';
     for (var col = 0; col < COLS; col++) {
       var addr = row * COLS + col;
-      var val  = cpu ? cpu.data[addr] : 0;
-      var cls  = val ? "mem-cell has-val" : "mem-cell";
-      memRows += '<div class="' + cls + '">' + toHex4(val) + '</div>';
+      var val  = cpu ? cpu.mem[addr] : 0;
+      var isPC = cpu && addr === cpu.pc - 1;
+      var isProg = addr < progEnd;
+      var cls = "mem-cell";
+      if (isPC)   cls += " mem-pc";
+      else if (isProg && val) cls += " mem-prog";
+      else if (!isProg && val) cls += " has-val";
+      else if (!isProg) cls += " mem-data-empty";
+      memRows += '<div class="' + cls + '" title="[' + toHex2(addr) + ']">' + toHex4(val) + '</div>';
     }
   }
+  var memLegend = '<div style="display:flex;gap:12px;margin-top:6px;flex-wrap:wrap">' +
+    '<span style="font-size:9px;color:#3b82f6">&#9632; Programa</span>' +
+    '<span style="font-size:9px;color:#4ade80">&#9632; Datos</span>' +
+    '<span style="font-size:9px;color:#fbbf24">&#9632; PC actual</span>' +
+    '<span style="font-size:9px;color:#2a2a2a">&#9632; Vacío</span>' +
+  '</div>';
   var memPanel = '<div class="panel">' +
-    '<div class="panel-title" style="color:#8b5cf6"><span class="bar" style="background:#8b5cf6"></span> Memoria datos (' + MEM_SIZE + ' celdas)</div>' +
+    '<div class="panel-title" style="color:#8b5cf6"><span class="bar" style="background:#8b5cf6"></span> Memoria unificada (' + MEM_SIZE + ' celdas)</div>' +
     '<div class="mem-grid" style="grid-template-columns:32px ' + 'repeat(' + COLS + ',1fr)'  + '">' +
       memHeader + memRows +
     '</div>' +
+    memLegend +
   '</div>';
 
   return '<div class="content">' + controls +
