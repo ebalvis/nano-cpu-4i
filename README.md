@@ -8,12 +8,10 @@
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 ![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-deployed-2ea44f?style=flat-square&logo=github)
-[![UVigo](https://img.shields.io/badge/Universidade_de_Vigo-003865?style=flat-square&logo=academia&logoColor=white)](https://desa.webs.uvigo.gal/)
-[![ESEI](https://img.shields.io/badge/ESEI-Informática-0057A8?style=flat-square)](https://esei.uvigo.es/)
 
 **Simulador interactivo de una CPU simplificada con ensamblador integrado, ejecución paso a paso y visualización en tiempo real de registros, memoria y flags.**
 
-🚀 [Demo en vivo](https://ebalvis.github.io/nano-cpu-4i/) · 📖 [Manual de uso](docs/simulador.md) · ⚙️ [Set de instrucciones](docs/isa.md) · 📋 [Ejemplos](examples/)
+🚀 [Demo en vivo](https://ebalvis.github.io/Simulador-interactivo-de-maquina-simple/) · 📖 [Manual de uso](docs/simulador.md) · ⚙️ [Set de instrucciones](docs/isa.md) · 📋 [Ejemplos](examples/)
 
 </div>
 
@@ -63,8 +61,7 @@ CERO:   dato 0000
 |---|---|
 | Bus de direcciones | 7 bits → 128 posiciones |
 | Bus de datos | 16 bits sin signo |
-| Memoria de programa | 128 × 16 bits (solo lectura en ejecución) |
-| Memoria de datos | 128 × 16 bits (lectura/escritura) |
+| Memoria unificada | 128 × 16 bits — Von Neumann (instrucciones + datos) |
 | Registros | PC (7b) · RI/IR (16b) · ZF (1b) |
 
 ### ISA — 4 instrucciones
@@ -78,9 +75,14 @@ CERO:   dato 0000
 
 Codificación de instrucción (16 bits):
 
-<img src="assets/bits-instruccion.png" alt="Instrucción (16 bits)" width="700">
+```
+ 15  14  13 ........  7   6 .........  0
+┌────────┬───────────────┬───────────────┐
+│  OP    │   Campo A     │   Campo B     │
+│ 2 bits │    7 bits     │    7 bits     │
+└────────┴───────────────┴───────────────┘
+```
 
-</div>
 ---
 
 ## 📂 Estructura del repositorio
@@ -125,6 +127,7 @@ Simulador-interactivo-de-maquina-simple/
 ## 🖥️ Ejecución en local
 
 El simulador es HTML + CSS + JS puro. Solo necesitas estos ficheros:
+
 ```
 index.html
 css/styles.css
@@ -148,6 +151,7 @@ Cópialos a cualquier carpeta y abre `index.html` en el navegador. Sin instalaci
 > ```
 
 🚀 O usa directamente la **[demo en vivo](https://ebalvis.github.io/Simulador-interactivo-de-maquina-simple/)** sin instalar nada.
+
 ---
 
 ## 🔧 Flujo de trabajo del ensamblador
@@ -161,11 +165,10 @@ Código fuente (.asm)
         ▼
   Pasada 2: generar código máquina
         │
-        ├─▶ progCode[]   → Memoria de programa (128 × 16b)
-        └─▶ dataInit{}   → Memoria de datos    (128 × 16b)
+        └─▶ mem[128]     → Memoria unificada (instrucciones + datos)
                 │
                 ▼
-          createCPU(progCode, dataInit)
+          createCPU(mem)
                 │
                 ▼
           stepCPU() × N   ← fetch → decode → execute
@@ -186,18 +189,6 @@ Código fuente (.asm)
 | [Changelog](CHANGELOG.md) | Historial de versiones |
 
 ---
-## 🎓 Contexto académico
-
-Este simulador se desarrolló como material didáctico para la asignatura:
-
-| | |
-|---|---|
-| **Asignatura** | Arquitectura de Computadoras I |
-| **Centro** | [Escola Superior de Enxeñaría Informática (ESEI)](https://esei.uvigo.es/) |
-| **Universidad** | [Universidade de Vigo](https://uvigo.gal/) |
-| **Departamento** | [Departamento de Enxeñaría dos Sistemas e da Computación Automática](https://desa.webs.uvigo.gal/) |
-
-
 
 ## 📄 Licencia
 

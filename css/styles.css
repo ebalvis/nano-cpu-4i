@@ -264,3 +264,9 @@ textarea {
 }
 .mem-cell.has-val { color: #888; background: #ffffff06; border-color: #2a2a2a; }
 .mem-cell.accessed { color: #8b5cf6; background: #8b5cf620; border-color: #8b5cf650; font-weight: 700; }
+
+/* ── memoria unificada — zonas ── */
+.mem-cell.mem-prog       { color: #3b82f6; background: #0a1025; border-color: #3b82f630; }
+.mem-cell.has-val        { color: #4ade80; background: #0a1a0a; border-color: #4ade8030; }
+.mem-cell.mem-pc         { color: #fbbf24; background: #1a1208; border-color: #fbbf2460; font-weight:700; }
+.mem-cell.mem-data-empty { color: #1a1a1a; }

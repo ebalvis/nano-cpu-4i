@@ -5,6 +5,17 @@ Formato: [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ---
 
+## [1.1.0] — 2025-03 — Memoria Von Neumann
+
+### Cambiado
+- Arquitectura Harvard eliminada: `prog[]+data[]` → único array `mem[128]`
+- Instrucciones en `mem[0..N-1]`, datos en `mem[N..]` (mismo espacio de 128 posiciones)
+- `createCPU(mem)` en lugar de `createCPU(progCode, dataInit)`
+- Panel memoria diferencia zonas: 🔵 programa · 🟢 datos · 🟡 PC actual
+- MOV/ADD/CMP pueden referenciar cualquier dirección del espacio unificado
+
+---
+
 ## [1.0.0] — 2025-03 — Refactorización vanilla JS
 
 ### Cambiado

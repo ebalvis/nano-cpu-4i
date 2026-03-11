@@ -2,11 +2,28 @@
 
 ## Diagrama de bloques
 
-<img src="../assets/arquitectura-maquina-simple.png" alt="Arquitectura de la Máquina Simple" width="700">
+```
+┌──────────────────────────────────────────────────────────┐
+│                         CPU                              │
+│                                                          │
+│   ┌────────┐    ┌────────────────┐    ┌────────────┐    │
+│   │   PC   │    │   RI  (IR)     │    │     ZF     │    │
+│   │ 7 bits │    │   16 bits      │    │   1 bit    │    │
+│   └───┬────┘    └───────┬────────┘    └────────────┘    │
+│       │                 │                                 │
+└───────┼─────────────────┼─────────────────────────────── ┘
+        │                 │
+   Bus de dir.       Bus de datos
+     (7 bits)         (16 bits)
+        │                 │
+┌───────▼─────────────────▼───────────────────────────────┐
+│     MEMORIA DE PROGRAMA        MEMORIA DE DATOS          │
+│       128 × 16 bits              128 × 16 bits           │
+│      (dirección 0..7F)          (dirección 0..7F)        │
+└─────────────────────────────────────────────────────────┘
+```
 
-</div>
-
-Arquitectura **Harvard** — buses físicamente separados para instrucciones y datos.
+Arquitectura **Von Neumann** — memoria unificada: instrucciones y datos comparten el mismo espacio de direcciones (0x00..0x7F). Las instrucciones ocupan las primeras posiciones; los datos (`dato`) se colocan a continuación.
 
 ---
 
@@ -29,9 +46,13 @@ Arquitectura **Harvard** — buses físicamente separados para instrucciones y d
 
 ## Codificación de instrucciones (16 bits)
 
-<img src="../assets/bits-instruccion.png" alt="Arquitectura de la Máquina Simple" width="700">
-
-</div>
+```
+ 15  14  13  12  11  10   9   8   7   6   5   4   3   2   1   0
+┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┐
+│OP │OP │A6 │A5 │A4 │A3 │A2 │A1 │A0 │B6 │B5 │B4 │B3 │B2 │B1 │B0 │
+└───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┘
+ ╰──OP──╯ ╰──────────── Campo A (7 bits) ──────────╯ ╰── Campo B (7 bits) ──╯
+```
 
 | Campo | Bits | Descripción |
 |---|---|---|
